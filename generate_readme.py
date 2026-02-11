@@ -1,25 +1,19 @@
-import random
 from datetime import datetime
+import re
 
-quotes = [
-    "Code is like humor. When you have to explain it, it’s bad.",
-    "First, solve the problem. Then, write the code.",
-    "Simplicity is the soul of efficiency."
-]
-
-quote = random.choice(quotes)
 today = datetime.utcnow().strftime("%Y-%m-%d")
+date_line = f"_Last updated: {today} UTC_"
 
-content = f"""
-# Kamran Khalid
+with open("README.md", "r") as f:
+    content = f.read()
 
-Backend Architect | Fintech | PHP | Node.js | Microservices
-
-## Daily Developer Thought
-> {quote}
-
-_Last updated: {today} UTC_
-"""
+# Replace or append the last updated line
+if re.search(r"_Last updated: .+ UTC_", content):
+    content = re.sub(r"_Last updated: .+ UTC_", date_line, content)
+else:
+    if not content.endswith("\n"):
+        content += "\n"
+    content += f"\n{date_line}\n"
 
 with open("README.md", "w") as f:
     f.write(content)
