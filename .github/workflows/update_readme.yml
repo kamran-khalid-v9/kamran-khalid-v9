@@ -1,5 +1,8 @@
 name: Update README Daily
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '0 0 * * *'
